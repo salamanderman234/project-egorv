@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get("/test-admin", function() {
+    return "asiap";
+})->middleware(["admin"]);
+
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("landing");
