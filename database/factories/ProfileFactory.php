@@ -25,6 +25,7 @@ class ProfileFactory extends Factory
             "date_of_birth" => fake()->dateTime(),
             "place_of_birth" => fake()->state(),
             "address" => fake()->address(),
+            "phone" => fake()->phoneNumber(),
             "status" => $status[fake()->numberBetween(0, count($status) - 1)]
         ];
     }
