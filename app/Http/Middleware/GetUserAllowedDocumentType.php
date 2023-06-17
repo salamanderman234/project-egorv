@@ -21,7 +21,7 @@ class GetUserAllowedDocumentType
         $user = $request->user();
         if(!empty($user)) {
             $user_types = JenisDocumentUser::select("jenis_document_id")
-                ->where("user_status", $user->profile()->status)
+                ->where("user_status", $user->profile->status)
                 ->get();
             $types = JenisDocument::whereIn("id", $user_types)->get();
             $request->user_types = $types;

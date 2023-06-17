@@ -20,7 +20,7 @@ class EnsureIsAdmin
         if(empty($user)) {
             return redirect()->route("landing");
         }
-        if($user->role != UserRoles::Admin) {
+        if($user->role != UserRoles::Admin->value) {
             return redirect()->route("landing");
         }
         return $next($request);

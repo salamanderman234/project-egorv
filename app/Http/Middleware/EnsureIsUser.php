@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Enums\UserRoles;
 
 class EnsureIsUser
 {
@@ -19,7 +20,7 @@ class EnsureIsUser
         if(empty($user)) {
             return redirect()->route("landing");
         }
-        if($user->role != UserRoles::Admin) {
+        if($user->role != UserRoles::User->value) {
             return redirect()->route("landing");
         }
         return $next($request);
