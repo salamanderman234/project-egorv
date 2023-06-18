@@ -21,7 +21,7 @@ class SubmissionDetailPolicy
      */
     public function view(User $user, SubmissionDetail $submissionDetail): bool
     {
-        //
+        return ($submissionDetail->submission->user->id === $user->id) || ($user->role === UserRoles::Admin->value);
     }
 
     /**
