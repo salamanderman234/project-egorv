@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
+            $table->string("admin_note")->nullable();
+            $table->date("pick_up_date")->nullable();
             $table->string("name");
-            $table->string("description");
-            $table->enum("status", ["pending", "accepted", "rejected"]);
+            $table->string("file");
+            $table->text("description");
+            $table->enum("status", ["pending", "accepted", "rejected", "need_tobe_revised", "cancelled"]);
             $table->bigInteger("jenis_document_id")->unsigned();
             $table->bigInteger("user_id")->unsigned();
 
