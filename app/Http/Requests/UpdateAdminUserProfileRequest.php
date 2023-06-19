@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreJenisDocumentRequest extends FormRequest
+class UpdateAdminUserProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,12 @@ class StoreJenisDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|max:255",
-            "description" => "required|max:500",
+            "password" => "nullable|min:6|max:32",
+            "fullname" => "required|max:255",
+            "phone" => "required|min:12|max:12|regex:/^[0-9]+$/",
+            "address" => "required|max:500",
+            "place_of_birth" => "max:100",
+            "date_of_birth" => "date",
         ];
     }
 }

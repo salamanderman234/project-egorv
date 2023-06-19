@@ -14,6 +14,10 @@ class JenisDocument extends Model
         return $this->hasMany(Submission::class);
     }
 
+    public function jenis_document_user() {
+        return $this->hasMany(JenisDocumentUser::class);
+    }
+
     public function special_terms() {
         return $this->hasMany(SpecialTerm::class);
     }
