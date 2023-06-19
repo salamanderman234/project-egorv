@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\User\UserSubmissionController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Asset\SubmissionAssetController;
@@ -23,6 +24,7 @@ Route::get('/', function () {
 })->name("landing");
 
 Route::get("/dashboard/redirect", [PageController::class, "dashboard"])->middleware(["auth"])->name("dashboard");
+Route::get("/profile/redirect", [PageController::class, "profile"])->middleware(["auth"])->name("profile");
 
 Route::name("auth.")->group(function () {
     Route::middleware(["guest"])->group(function() {
@@ -53,9 +55,9 @@ Route::middleware(["auth", "user"])->name("user.")->group(function () {
 });
 
 Route::prefix("/admin")->middleware(["auth", "admin"])->name("admin.")->group(function () {
-    Route::get("/dashboard", function() {
-        return "dashboard admin bang";
-    })->name("dashboard");
+    Route::get("/dashboard", [AdminDashboardController::class, "dashboard"])->name("dashboard");
+    Route::get("/profile", [AdminDashboardController::class, "profile"])->name("profile");
+    Route::patch('/{user}/profile/save', [AdminDashboardController::class, 'profileSave'])->name("profile.save");
 });
 
 Route::prefix("/assets")->middleware(["auth"])->name("assets.")->group(function() {
