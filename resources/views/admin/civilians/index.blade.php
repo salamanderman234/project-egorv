@@ -70,7 +70,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">Tidak ada jenis dokumen yang ditemukan</td>
+                                    <td colspan="4" class="text-center">Tidak ada penduduk yang ditemukan</td>
                                 </tr>
                             @endforelse
                         </tbody>

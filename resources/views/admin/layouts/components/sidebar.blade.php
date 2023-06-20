@@ -46,13 +46,13 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pengajuan</span>
         </li>
-        <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.profile') }}" class="menu-link">
+        <li class="menu-item {{ (request()->is('admin/submissions*')) ? 'active' : '' }}">
+            <a href="{{ route('admin.submissions.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-edit-alt'></i>
                 <div data-i18n="Analytics">Pengajuan</div>
             </a>
         </li>
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Template</span>
         </li>
         <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
@@ -60,7 +60,7 @@
                 <i class='menu-icon tf-icons bx bxl-blogger'></i>
                 <div data-i18n="Analytics">Template Surat</div>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </aside>
 <!-- / Menu -->
