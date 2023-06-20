@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateJenisDocumentRequest;
 use App\Http\Controllers\Controller;
 use App\Enums\UserStatuses;
 use App\Enums\SpecialTermTypes;
+use Illuminate\Validation\ValidationException;
 
 class JenisDocumentController extends Controller
 {
@@ -75,11 +76,16 @@ class JenisDocumentController extends Controller
             
             if(count($specialTermNameType) > 0){
                 foreach($specialTermNameType as $nameType) {
-                    SpecialTerm::create([
-                        "jenis_document_id" => $document->id,
-                        "name" => array_key_first($nameType),
-                        "type" => $nameType[array_key_first($nameType)],
-                    ]);
+                    $name = array_key_first($nameType);
+                    if(!empty($name)) {
+                        SpecialTerm::create([
+                            "jenis_document_id" => $document->id,
+                            "name" => array_key_first($nameType),
+                            "type" => $nameType[array_key_first($nameType)],
+                        ]);
+                    } else {
+                        throw abort(400);
+                    }
                 }
             }
                 
@@ -87,7 +93,6 @@ class JenisDocumentController extends Controller
             return redirect()->route("admin.documents.index")->with("success", "berhasil membuat jenis dokumen");
         }catch(\Throwable $th) {
             DB::rollback();
-            dd($th);
             return redirect()->back()->with("error", "terjadi kesalahan saat menyimpan data");
         }
     }

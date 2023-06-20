@@ -37,8 +37,8 @@
                 <div data-i18n="Analytics">User</div>
             </a>
         </li>
-        <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.profile') }}" class="menu-link">
+        <li class="menu-item {{ (request()->is('admin/civilians*')) ? 'active' : '' }}">
+            <a href="{{ route('admin.civilians.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-face' ></i>
                 <div data-i18n="Analytics">Penduduk</div>
             </a>
