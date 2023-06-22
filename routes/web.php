@@ -69,8 +69,9 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->name("admin.")->group(fu
 });
 
 Route::prefix("/assets")->middleware(["auth"])->name("assets.")->group(function() {
-    Route::prefix("/pengajuan")->name("submission.")->group(function() {
+    Route::prefix("/submission")->name("submission.")->group(function() {
         Route::get("/file/{submission}", [SubmissionAssetController::class, "file"])->name("file");
+        Route::get("/soft_copy/{submission}",[SubmissionAssetController::class, "softCopy"])->name("softCopy");
         Route::get("/details/{submissionDetail}", [SubmissionAssetController::class, "detail"])->name("detail");
     });
 });

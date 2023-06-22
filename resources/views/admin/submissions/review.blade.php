@@ -19,13 +19,13 @@
 		<div class="col-xxl">
 			<div class="card mb-4">
 				<div class="card-header d-flex align-items-center justify-content-between mb-3">
-					<h5 class="mb-0">Detail Pengajuan</h5>
+					<h5 class="mb-0">Detail Pengajuan#{{ $submission->id }}</h5>
 					<a href="{{ route('admin.submissions.index') }}" class="btn btn-danger">
 					    Kembali
                     </a>
 				</div>
 				<div class="card-body">
-                    <form action="{{ route('admin.submissions.update', $submission) }}" method="POST">
+                    <form action="{{ route('admin.submissions.update', $submission) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <h2 class="form-label fw-bold text-primary">*Status Pengajuan</h2>
@@ -67,6 +67,11 @@
                         <div class="mb-3">
                             <label for="soft_copy" class="form-label">Dokumen Digital</label>
                             <input type="file" accept="application/pdf" name="soft_copy" class="form-control" id="soft-copy" placeholder="Upload pdf dari pengajuan">
+                            @empty($submission->soft_copy)
+                                <small class="d-block text-warning">Dokumen digital belum diupload</small>
+                            @else
+                                <a target="_blank" class="d-block" href="{{ route('assets.submission.softCopy', $submission) }}">Lihat dokumen digital</a>
+                            @endempty
                             @error('soft_copy')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

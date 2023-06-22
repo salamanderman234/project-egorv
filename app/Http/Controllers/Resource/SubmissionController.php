@@ -19,13 +19,19 @@ class SubmissionController extends Controller
         $keyword = $request->query("q", "");
         $status = $request->query("status", "");
         $q = Submission::where("status", "!=", SubmissionStatuses::Cancelled->value)
-            ->whereHas("jenis_document",function ($query) use ($keyword) {
-                return $query->where("name", "LIKE", "%{$keyword}%");
+            ->where(function ($q) use($keyword) {
+                return $q->whereHas("jenis_document",function ($query) use ($keyword) {
+                    return $query->where("name", "LIKE", "%{$keyword}%");
+                })
+                ->orWhere("id", $keyword);
             });
         if($status != ""){
             $q->where("status", $status);
         }
-        $submissions = $q->paginate(5)->withQueryString();
+        $submissions = $q
+            ->orderBy("updated_at", "desc")
+            ->paginate(5)
+            ->withQueryString();
         return view('admin.submissions.index')->with([
             "submissions" => $submissions,
             "queryStatus" => $status
@@ -58,7 +64,7 @@ class SubmissionController extends Controller
             $data["soft_copy"] = $path;
         }
         $submission->update($data);
-        return redirect()->route('admin.submissions.index', ["status"=>\App\Enums\SubmissionStatuses::Pending->value])->with("success", "berhasil mengubah status pengajuan");
+        return redirect()->route('admin.submissions.index')->with("success", "berhasil mengubah status pengajuan");
     }
 
     /**

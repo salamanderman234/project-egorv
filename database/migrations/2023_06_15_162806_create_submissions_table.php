@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("file");
             $table->string('soft_copy')->nullable();
             $table->text("description");
-            $table->enum("status", ["pending", "accepted", "rejected", "need_tobe_revised", "cancelled"]);
+            $table->enum("status", ["menunggu konfirmasi", "diterima", "ditolak", "butuh revisi", "dibatalkan"]);
             $table->bigInteger("jenis_document_id")->unsigned();
             $table->bigInteger("user_id")->unsigned();
 

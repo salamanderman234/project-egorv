@@ -27,7 +27,7 @@ class UpdateSubmissionRequest extends FormRequest
             "status" => [new Enum(SubmissionStatuses::class)],
             "pick_up_date" => "nullable|date",
             "admin_note" => "nullable|max:500",
-            "soft_copy" => "nullable|file|mimes:pdf|max:10000"
+            "soft_copy" => "nullable|file|mimes:pdf"
         ];
     }
 }
