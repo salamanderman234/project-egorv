@@ -29,6 +29,16 @@
 			<div class="card mb-4">
 				<div class="card-header d-flex align-items-center justify-content-between">
 					<h5 class="mb-0">List Pengajuan</h5>
+                    <form class="w-25 d-flex align-items-center" action="">
+                        <label for="form-label">Status</label>
+                        <select name="status" id="status" class="form-control ms-2">
+                            @foreach (\App\Enums\SubmissionStatuses::cases() as $status)
+                                @if ($status->value != \App\Enums\SubmissionStatuses::Pending->value && $status->value != \App\Enums\SubmissionStatuses::Cancelled->value)
+                                    <option @selected($status->value === $queryStatus) value="{{ $status->value }}">{{ $status->value }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </form>
 				</div>
 				<div class="card-body">
                     <div class="table-responsive text-nowrap">

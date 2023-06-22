@@ -61,6 +61,9 @@ class UserSubmissionController extends Controller
 
     public function update(UpdateUserSubmissionRequest $request, Submission $submission){
         $this->authorize("update", $submission);
+        if($submission->status === SubmissionStatuses::Cancelled->value || $submission->status === SubmissionStatuses::Success->value) {
+            return redirect()->route('user.submission.index')->with("error", "tidak bisa update pengajuan");
+        }
         $data = $request->validated();
         DB::beginTransaction();
         try {

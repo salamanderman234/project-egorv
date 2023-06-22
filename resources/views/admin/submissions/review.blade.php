@@ -32,9 +32,11 @@
                         <hr>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <select name="status" id="status" class="form-control">
+                            <select name="status" id="status" class="form-control" @disabled($submission->status === \App\Enums\SubmissionStatuses::Cancelled->value)>
                                 @foreach (\App\Enums\SubmissionStatuses::cases() as $status)
-                                    <option @selected($status->value === $submission->status) value="{{ $status->value }}">{{ $status->name }}</option>
+                                    @if ($status->value != \App\Enums\SubmissionStatuses::Cancelled->value)
+                                        <option @selected($status->value === $submission->status) value="{{ $status->value }}">{{ $status->value }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             @error('status')
@@ -58,6 +60,14 @@
                             <label for="description" class="form-label">Catatan dari Kaling</label>
                             <textarea name="admin_note" placeholder="Catatan dari admin mengenai pengajuan" class="form-control" id="description"rows="5">{{ old('admin_note',$submission->admin_note) }}</textarea>
                             @error('admin_note')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="soft_copy" class="form-label">Dokumen Digital</label>
+                            <input type="file" accept="application/pdf" name="soft_copy" class="form-control" id="soft-copy" placeholder="Upload pdf dari pengajuan">
+                            @error('soft_copy')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

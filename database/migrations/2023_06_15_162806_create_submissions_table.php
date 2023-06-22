@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date("pick_up_date")->nullable();
             $table->string("name");
             $table->string("file");
+            $table->string('soft_copy')->nullable();
             $table->text("description");
             $table->enum("status", ["pending", "accepted", "rejected", "need_tobe_revised", "cancelled"]);
             $table->bigInteger("jenis_document_id")->unsigned();
