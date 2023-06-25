@@ -19,7 +19,10 @@
 		<div class="col-xxl">
 			<div class="card mb-4">
 				<div class="card-header d-flex align-items-center justify-content-between">
-					<h5 class="mb-0">Pengajuan Dokumen {{ $type->name }}</h5>
+					<div>
+                        <h5 class="mb-0">Pengajuan Dokumen {{ $type->name }}</h5>
+                        <a class="d-block mt-3" href="{{ route('assets.document.template', ['document' => $type]) }}">Download template</a>
+                    </div>
 					<a href="{{ route('user.submission.index') }}" class="btn btn-danger">
 					    Kembali
                     </a>
