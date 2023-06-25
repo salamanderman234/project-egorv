@@ -58,7 +58,7 @@
                               id="template"
                               name="template"
                               value="{{ old('template') }}"
-                              accept="application/msword"
+                              accept=".doc,.docx"
                               placeholder="Masukan template dokumen"
                             />
                             @error('template')
