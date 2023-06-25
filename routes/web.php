@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Resource\JenisDocumentController;
+use App\Http\Controllers\Resource\UserController;
+use App\Http\Controllers\Resource\LocalCivilianController;
+use App\Http\Controllers\Resource\SubmissionController;
 use App\Http\Controllers\User\UserSubmissionController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Asset\SubmissionAssetController;
@@ -55,14 +59,19 @@ Route::middleware(["auth", "user"])->name("user.")->group(function () {
 });
 
 Route::prefix("/admin")->middleware(["auth", "admin"])->name("admin.")->group(function () {
+    Route::resource("documents", JenisDocumentController::class);
+    Route::resource("users", UserController::class);
+    Route::resource("civilians", LocalCivilianController::class);
+    Route::resource("submissions", SubmissionController::class);
     Route::get("/dashboard", [AdminDashboardController::class, "dashboard"])->name("dashboard");
     Route::get("/profile", [AdminDashboardController::class, "profile"])->name("profile");
     Route::patch('/{user}/profile/save', [AdminDashboardController::class, 'profileSave'])->name("profile.save");
 });
 
 Route::prefix("/assets")->middleware(["auth"])->name("assets.")->group(function() {
-    Route::prefix("/pengajuan")->name("submission.")->group(function() {
+    Route::prefix("/submission")->name("submission.")->group(function() {
         Route::get("/file/{submission}", [SubmissionAssetController::class, "file"])->name("file");
+        Route::get("/soft_copy/{submission}",[SubmissionAssetController::class, "softCopy"])->name("softCopy");
         Route::get("/details/{submissionDetail}", [SubmissionAssetController::class, "detail"])->name("detail");
     });
 });

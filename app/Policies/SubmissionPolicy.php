@@ -47,7 +47,7 @@ class SubmissionPolicy
      */
     public function delete(User $user, Submission $submission): bool
     {
-        return ($submission->user->id === $user->id) || ($user->role === UserRoles::Admin->value);
+        return (($submission->user->id === $user->id) || ($user->role === UserRoles::Admin->value)) && ($submission->status === SubmissionStatus::Pending->value || $submission->status === SubmissionStatus::Revised->value);
     }
 
     /**

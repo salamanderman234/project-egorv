@@ -25,46 +25,40 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Master</span>
         </li>
-        <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Analytics">Dokumen</div>
+        <li class="menu-item {{ (request()->is('admin/documents*')) ? 'active' : '' }}">
+            <a href="{{ route('admin.documents.index') }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-file'></i>
+                <div data-i18n="Analytics">Jenis Dokumen</div>
             </a>
         </li>
-        <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+        <li class="menu-item {{ (request()->is('admin/users*')) ? 'active' : '' }}">
+            <a href="{{ route('admin.users.index') }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-group'></i>
                 <div data-i18n="Analytics">User</div>
             </a>
         </li>
-        <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+        <li class="menu-item {{ (request()->is('admin/civilians*')) ? 'active' : '' }}">
+            <a href="{{ route('admin.civilians.index') }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-face' ></i>
                 <div data-i18n="Analytics">Penduduk</div>
             </a>
         </li>
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pengajuan</span>
         </li>
-        <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+        <li class="menu-item {{ (request()->is('admin/submissions*')) ? 'active' : '' }}">
+            <a href="{{ route('admin.submissions.index') }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-edit-alt'></i>
                 <div data-i18n="Analytics">Pengajuan</div>
             </a>
         </li>
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Template</span>
         </li>
         <li class="menu-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
             <a href="{{ route('admin.profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class='menu-icon tf-icons bx bxl-blogger'></i>
                 <div data-i18n="Analytics">Template Surat</div>
-            </a>
-        </li>
-        {{-- <li class="menu-item {{ (request()->is('pengajuan*')) ? 'active' : '' }}">
-            <a href="{{ route('admin.submission.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-folder"></i>
-                <div data-i18n="Basic">Pengajuan Dokumen</div>
             </a>
         </li> --}}
     </ul>

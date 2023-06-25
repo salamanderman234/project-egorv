@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLocalCivilianRequest extends FormRequest
+class UpdateAdminUserProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,12 @@ class StoreLocalCivilianRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "password" => "nullable|min:6|max:32",
             "fullname" => "required|max:255",
-            "nik" => "required|regex:/^[0-9]+$/|unique:profiles,nik",
-            "date_of_birth" => "required|date",
-            "place_of_birth" => "required|max:255",
-            "address" => "required|max:255"
+            "phone" => "required|min:12|max:12|regex:/^[0-9]+$/",
+            "address" => "required|max:500",
+            "place_of_birth" => "max:100",
+            "date_of_birth" => "date",
         ];
     }
 }

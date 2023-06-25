@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('admin.layouts.app')
 @section('title', "Detail Pengajuan")
 @section('content')
 <!-- Modal -->
@@ -18,53 +18,65 @@
 		<!-- Basic Layout -->
 		<div class="col-xxl">
 			<div class="card mb-4">
-				<div class="card-header d-flex align-items-center justify-content-between">
-					<h5 class="mb-0">Detail Pengajuan</h5>
-					<a href="{{ route('user.submission.index') }}" class="btn btn-danger">
+				<div class="card-header d-flex align-items-center justify-content-between mb-3">
+					<h5 class="mb-0">Detail Pengajuan#{{ $submission->id }}</h5>
+					<a href="{{ route('admin.submissions.index') }}" class="btn btn-danger">
 					    Kembali
                     </a>
 				</div>
 				<div class="card-body">
-                    <form>
-                        <h2 class="form-label fw-bold text-primary">*Status</h2>
+                    <form action="{{ route('admin.submissions.update', $submission) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                        <h2 class="form-label fw-bold text-primary">*Status Pengajuan</h2>
                         <hr>
                         <div class="mb-3">
-                            <label for="fullname" class="form-label">Status</label>
-                            <input
-                              type="text"
-                              class="form-control @error('name') is-invalid @enderror"
-                              id="fullname"
-                              name="name"
-                              value="{{ $submission->status }}"
-                              disabled
-                            />
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-control" @disabled($submission->status === \App\Enums\SubmissionStatuses::Cancelled->value)>
+                                @foreach (\App\Enums\SubmissionStatuses::cases() as $status)
+                                    @if ($status->value != \App\Enums\SubmissionStatuses::Cancelled->value)
+                                        <option @selected($status->value === $submission->status) value="{{ $status->value }}">{{ $status->value }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="fullname" class="form-label">Tanggal Ambil</label>
-                            @empty($submission->pick_up_date)
-                                <small class="d-block fw-bold">Belum ada tanggal pengambilan !</small>
-                            @else
-                                <input
-                                type="date"
-                                class="form-control"
-                                id="fullname"
-                                value="{{ $submission->pick_up_date }}"
-                                disabled
+                            <label for="pick_up_date" class="form-label">Tanggal Ambil</label>
+                            <input
+                              type="date"
+                              class="form-control"
+                              id="pick_up_date"
+                              name="pick_up_date"
+                              value="{{ old('pick_up_date',$submission->pick_up_date )}}"
                             />
-                            @endempty
+                            @error('pick_up_date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror     
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Catatan dari Kaling</label>
-                            <textarea disabled class="form-control" id="description"rows="5">@empty($submission->admin_note){{ "Tidak ada catatan dari kaling" }}@else{{ $submission->admin_note }}@endempty</textarea>
+                            <textarea name="admin_note" placeholder="Catatan dari admin mengenai pengajuan" class="form-control" id="description"rows="5">{{ old('admin_note',$submission->admin_note) }}</textarea>
+                            @error('admin_note')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label for="soft_copy" class="form-label">Dokumen Digital</label>
+                            <input type="file" accept="application/pdf" name="soft_copy" class="form-control" id="soft-copy" placeholder="Upload pdf dari pengajuan">
                             @empty($submission->soft_copy)
                                 <small class="d-block text-warning">Dokumen digital belum diupload</small>
                             @else
-                                <a target="_blank" class="d-block" href="{{ route('assets.submission.softCopy', $submission) }}">Download dokumen digital</a>
+                                <a target="_blank" class="d-block" href="{{ route('assets.submission.softCopy', $submission) }}">Lihat dokumen digital</a>
                             @endempty
+                            @error('soft_copy')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <h2 class="form-label fw-bold text-primary">*Pengajuan</h2>
                         <hr>
                         <div class="mb-3">
@@ -88,10 +100,10 @@
                             <textarea disabled class="form-control @error('description') is-invalid @enderror" id="description"
                             name="description" rows="5" placeholder="Masukan alasan pengajuan anda">{{ $submission->description }}</textarea>
                         </div>
-                        @if(!$details->isEmpty())
+                        @if(!$submission->details->isEmpty())
                             <h2 class="form-label fw-bold text-primary">*Detail Pengajuan</h2>
                             <hr>
-                            @foreach ($details as $detail)
+                            @foreach ($submission->details as $detail)
                                 <div class="mb-4">
                                     <label class="form-label">{{ $detail->special_term->name }}</label>
                                     @if ($detail->special_term->type === 'image' || $detail->special_term->type === 'pdf')
@@ -102,6 +114,9 @@
                                 </div>
                             @endforeach
                         @endif
+                        <div class="mt-5 d-flex justify-content-center align-items-center">
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
                     </form>
 				</div>
 			</div>
